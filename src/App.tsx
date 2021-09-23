@@ -1,20 +1,46 @@
-import React from 'react';
+import React, { useReducer, useCallback, useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Home from "./Home";
-import AnotherScreen from "./AnotherScreen";
+//import Home from "./Home";
+//import AnotherScreen from "./AnotherScreen";
 import Greeting from "./Greeting";
-import { Switch, Route} from "react-router";
+import ListCreator, { ListItem } from './ListCreator';
+//import { Switch, Route} from "react-router";
+const reducer = (state: any, action: any) => {
+  console.log("enteredNameReducer");
+  
+  switch(action.type){
+    case "enteredName":
+      if(state.enteredName === action.payload){
+        return state;
+      }
+      return { ...state, enteredName: action.payload }
+    case "message":
+      return { ...state, message: `Hello, ${action.payload}`}
+    default:
+      throw new Error(`Invalid action type ${action.type}`);
+  }
+}
+
+const initialState = {
+  enteredName: "",
+  message: ""
+}
 
 function App() {
+  const [{ message, enteredName }, dispatch] = useReducer(reducer, initialState);
+  const [startCount, setStartCount] = useState(0);
+  const [count, setCount] = useState(0);
+  const setCountCallback = useCallback(() => {
+    const inc = count + 1 > startCount ? count + 1 : Number( count + 1 ) + startCount;
+    setCount(inc);
+  }, [count, startCount]);
+
+  console.log("App.tsx render");
+
   return (
     <div className="App">
       <header className="App-header">
-        <Switch>
-          <Route exact={true} path="/" component={Home}></Route>
-          <Route exact={true} path="/another" component={AnotherScreen}></Route>
-          <Route exact={true} path="/greetings" component={Greeting} ></Route>
-        </Switch>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
