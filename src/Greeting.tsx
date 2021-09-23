@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useState, useEffect } from "react";
 interface GreetingProps {
     name?: string;
 }
@@ -7,7 +7,7 @@ interface GreetingState {
     message: string;
 }
 
-export default class Greeting extends React.Component<GreetingProps, GreetingState>{
+/* export default class Greeting extends React.Component<GreetingProps, GreetingState>{
     constructor(props: GreetingProps){
         super(props);
         this.state = {
@@ -27,4 +27,19 @@ export default class Greeting extends React.Component<GreetingProps, GreetingSta
 
         return <div>{this.state.message}</div>
     }
+} */
+
+const Greeting: FC<GreetingProps> = ({name}: GreetingProps) => {
+    const [message, SetMessage] = useState("");
+    useEffect(() => {
+        if(name){
+            SetMessage(`Hello from ${name}`);
+        }}, [name]);
+
+    if(!name){
+        return <div>NNo name given</div>;
+    }
+
+    return <div>{message}</div>;
 }
+export default Greeting;
