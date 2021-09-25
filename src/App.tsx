@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 //import Home from "./Home";
 //import AnotherScreen from "./AnotherScreen";
-import Greeting from "./Greeting";
+import Greeting from "./GreetingFunctional";
 import ListCreator, { ListItem } from './ListCreator';
 //import { Switch, Route} from "react-router";
 
@@ -61,6 +61,22 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <Greeting 
+          message ={message}
+          enteredName={enteredName}
+          greetingDispatcher={dispatch} />
+        
+        <div style={{marginTop: '10px'}}>
+          <label>Enter a number and we'll increment it</label>
+          <br/>
+          <input value={startCount} onChange={onChangeStartCount} style={{width: '.75rem'}} /> &nbsp;
+          <label>{count}</label>
+          <br />
+          <button onClick={onWelcomeBtnClick}>Increment count</button>
+        </div>
+        <div>
+          <ListCreator listItems={listItems} />
+        </div>
       </header>
     </div>
   );
