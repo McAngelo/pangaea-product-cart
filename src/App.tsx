@@ -6,6 +6,7 @@ import './App.css';
 import Greeting from "./Greeting";
 import ListCreator, { ListItem } from './ListCreator';
 //import { Switch, Route} from "react-router";
+
 const reducer = (state: any, action: any) => {
   console.log("enteredNameReducer");
   
@@ -35,6 +36,24 @@ function App() {
     const inc = count + 1 > startCount ? count + 1 : Number( count + 1 ) + startCount;
     setCount(inc);
   }, [count, startCount]);
+  const [listItems, setListItems] = useState<Array<ListItem>>();
+
+  useEffect(() => {
+    const li = [];
+    for(let i = 0; i < count; i++){
+      li.push({id: i});
+    }
+
+    setListItems(li);
+  }, [count]);
+
+  const onWelcomeBtnClick = () => {
+    setCountCallback();
+  }
+
+  const onChangeStartCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartCount(Number(e.target.value));
+  }
 
   console.log("App.tsx render");
 
